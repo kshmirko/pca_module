@@ -1,0 +1,239 @@
+<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; CHARSET=ISO-8859-1">
+<title>PCA Module</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+
+<body>
+<h1 align="center">PCA Module for Python</h1>
+
+<hr />
+
+<div style="padding-top:10px; padding-bottom:30px; background-color: #fff;">
+
+<table width="866" align="center">
+<tr>
+<td>
+
+<h3>Contents</h3>
+<ol>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#download">Download</a></li>
+  <li><a href="#doc">Documentation</a></li>
+  <li><a href="#install">Installation</a></li>
+  <li><a href="#use">Usage</a></li>
+  <li><a href="#test">Testing</a></li>
+  <li><a href="#update">Updates</a></li>
+
+</ol>
+
+<hr />
+
+<h3 id="intro">1. Introduction</h3>
+<p>
+Implementation of a PCA module in python using numpy, scipy and
+python extensions (here, in C). The module carries out Principal
+Component Analysis (PCA) using either Singular Value Decomposition
+(SVD) or the NIPALS algorithm.
+</p>
+
+<p>
+I chose to implement the NIPALS algorithm in C, because it is
+supposed to be faster on larger data sets. The user can choose
+the number of PCs that are to be calculated. And the scipy package
+already comes with a SVD method.
+</p>
+
+<hr />
+
+<h3 id="download">2. Download</h3>
+<p>
+The PCA Module includes a PCA made for numpy and scipy, and also a limited
+PCA only made for Numeric. You can choose which one you want to install
+by editing the setup.py file.
+</p>
+<p>
+<a href="http://folk.uio.no/henninri/pca_module/pca_module-1.1.02.rar">PCA Module 1.1.02</a> (source code w/ distutils setup)
+</p>
+<p>
+<a href="http://folk.uio.no/henninri/pca_module/pca_module-1.1.rar">PCA Module 1.1</a> (source code w/ distutils setup)
+</p>
+<p>
+<a href="http://folk.uio.no/henninri/pca_module/pca_module-1.0.rar">PCA Module 1.0</a> (source code w/ distutils setup)
+</p>
+
+<hr />
+
+<h3 id="doc">3. Documentation</h3>
+<p>
+PCA can be used to reduce multidimensional data to fewer dimensions,
+while preserving the most important information during the process.
+After that it can be used for exploratory data analysis or to make
+predictive models.
+</p>
+<p>
+See pca_nipals.pdf in the doc folder for more information about PCA,
+Nipals and Correlation Loadings: <a href="pca_nipals.pdf">pca_nipals.pdf</a>
+</p>
+<p>
+Go to the API pages for details about each function in the PCA Module:<br />
+<a href="numpy_html/index.html">API Numpy version</a><br />
+<a href="numeric_html/index.html">API Numeric version</a>
+</p>
+
+<hr />
+
+<h3 id="install">4. Installation</h3>
+<p>
+Standard distutils build and install:<br />
+$ python setup.py install
+</p>
+<p>
+There are two variables that can be adjusted in setup.py. The first "add_ext"
+sets extension to be compiled and included (include: add_ext = True). If you set it to
+False, C python extension will not be included and you cannot access c_nipals.
+PCA can be calculated without the C python extension.
+The other variable "old_numeric" sets which version to use. Either
+old numeric version or the numpy version (use numpy version:
+old_numeric = False).
+</p>
+<p>
+The old numeric version is more limited when it comes to functions. If possible
+the PCA module for scipy and numpy should be used.
+</p>
+
+<p>
+To test that installation did not fail, try:<br />
+$ python<br />
+...<br />
+>>> import pca_module<br />
+>>>
+</p>
+<p>
+No errors or exceptions should appear.
+</p>
+<hr />
+
+<h3 id="use">5. Usage</h3>
+<p>
+The most difficult part about PCA is using it well. This involves: formulating the problem well,
+choosing the best possible variables, scores/values must be gathered, and finally,
+after PCA calculation, explore the data and analyse
+plots you can make. You should know a little about PCA
+before you start using this module. I will not go far into these areas of PCA here,
+but show how you can get the calculated data.
+</p>
+<p>
+Assume you have a 2-dimensional data matrix ( X ) that holds your data
+you want to analyze. This matrix is of size n x p with n = number of objects and
+p = number of variables. Each row holds the values of an
+object and each column holds the value for a variable.
+Here you will see how to run the PCA on such a data matrix ( X ):
+</p>
+
+<p>
+Examples usage (with explained variance for each PC):<br />
+>>> from pca_module import *<br />
+>>> T, P, explained_var = PCA_svd(X, standardize=True)<br />
+>>>
+</p>
+
+
+<p>
+Examples usage 2 (with E-matrix for each PC):<br />
+>>> from pca_module import *<br />
+>>> T, P, E = PCA_nipals2(X, standardize=True, E_matrices=True)<br />
+>>>
+</p>
+
+<p>
+Now both mean centering (always done) and standardization (standardize=True) of X
+has been done before PCA calculation. The PCA method returns two matrices and one array.
+The first matrix, T, are the so called PCA Scores,
+the second matrix, P, are the PCA Loadings, and the third and last element is an array
+of explained variance for each PC. You can read more about this under:
+<a href="#doc">3. Documentation</a>.
+</p>
+
+<p>
+Here I have made some plots of the results, and short explanations about the content:
+<a href="plot_example.html">plot example</a>
+</p>
+
+<p>
+Go to the functions list for details about each function in the PCA Module:<br />
+<a href="pca_module_functions.html">Functions list</a>
+</p>
+
+<hr />
+<h3 id="test">6. Testing</h3>
+<p>
+After installation is complete, you can unit-test the module.
+With a python testing script called testing.py. There is also a
+method for time measurements in the testing script.
+</p>
+<p>
+Running the testing script:<br />
+$ python testing.py
+</p>
+<p>
+Or for Numeric install:<br />
+$ python testing_numeric.py
+</p>
+<p>
+errors   -  problems with module (e.g. import error)<br />
+failures -  functions returns wrong results
+</p>
+
+
+
+<hr />
+
+<h3 id="update">7. Updates</h3>
+
+<p>
+PCA Module 1.1.01 - february 2008<br />
+- Changed to using numpy.linalg instead of scipy.linalg.<br />
+- Added test in nipals. Before t was just set to first column of E. Now t will be set to a non-zero vector if possible.<br />
+- And some other minor fixes.
+</p>
+
+
+<p>
+PCA Module 1.1 - oktober 2007<br />
+- You can now get all E-matrices after a PCA. See 'Usage' on how to do it.
+   Updated for all nipals methods including python c extension.<br />
+- PCA_svd still only returns the explained variances.
+</p>
+
+<p>
+PCA Module 1.0 - may 2007<br />
+- PCA using different packages and methods.
+</p>
+
+
+
+
+
+</td>
+</tr>
+</table>
+</div>
+
+<hr />
+<div style="text-align:center">
+<i>
+by: Henning Risvik,
+<a href="mailto:risvik@gmail.com">risvik@gmail.com</a>,
+february 2008, University of Oslo
+</i>
+</div>
+
+
+</body>
+
+</html>

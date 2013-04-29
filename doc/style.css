@@ -1,0 +1,41 @@
+
+<!--
+
+
+body
+{
+margin: 0px; margin-top: 20px; margin-bottom: 20px;
+color:#000;
+font-family: verdana, Arial;
+font-size: 100%;
+background-color: #eee;
+}
+
+a 	{color: #55c; background-color: transparent}
+a:hover	{color: #77e; background-color: transparent}
+
+a.blue	{color: #66e; background-color: transparent}
+a:hover.blue	{color: #99f; background-color: transparent;}
+
+
+a.red 	{color: #d09010; background-color: transparent}
+a:hover.red	{color: #ffa020; background-color: transparent;}
+
+a.blod 	{color: #A83E05; background-color: #F3E8DE}
+a:hover.blod	{color: #C44A07; background-color: #F3E8DE}
+
+h1	{color: #000; }
+h3	{color: #000; }
+h5	{color: #000; font-size: 11pt;}
+
+table {font-size: 90%;}
+
+
+hr	{color: #ccc; }
+
+dt {color: #339; font-weight: bold}
+dd {padding-bottom: 30px;}
+
+
+
+-->
